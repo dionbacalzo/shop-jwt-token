@@ -9,7 +9,7 @@ import {
 	HttpInterceptor,
 	HttpEvent
 } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { catchError, tap, map } from 'rxjs/operators';
 
@@ -29,53 +29,32 @@ const httpOptions = {
 @Injectable({
 	providedIn: 'root'
 })
-export class AuthenticationService implements HttpInterceptor {
+export class AuthenticationService {
 
 	authenticated = false;
 	user: any = new User();
 
 	public static JWT_TOKEN = 'token';
 
+	// reference when logout happens
+    logoutSubject: Subject<boolean> = new Subject<boolean>();
+
+    logoutChange(val: boolean) {
+        this.logoutSubject.next(val);
+    }
+
+    // reference for jwt token to start auto refresh timer
+    loginSubject: Subject<boolean> = new Subject<boolean>();
+
+    loginChange(val: boolean) {
+        this.loginSubject.next(val);
+    }
+
 	constructor(
 		private http: HttpClient,
 		private router: Router,
 		private messageService: MessageService
 	) { }
-
-	intercept(
-		request: HttpRequest<any>,
-		next: HttpHandler
-	): Observable<HttpEvent<any>> {
-		request = request.clone({
-			withCredentials: true
-		});
-
-		return next.handle(request).pipe(
-			catchError(
-				(
-					error: HttpErrorResponse,
-					caught: Observable<HttpEvent<any>>
-				): Observable<HttpEvent<any>> => {
-					// catch authentication errors
-					if (error.status === 401 || error.status === 403) {
-						this.messageService.clear();
-						this.authenticated = false;
-						localStorage.removeItem(AuthenticationService.JWT_TOKEN);
-						
-						this.messageService.add(
-							new ErrorMessage({
-								messageDisplay: 'Authorized account required'
-							})
-						);
-						// immediately stop further processes and display error message
-						return of(undefined as HttpEvent<any>);
-					} else {
-						throw caught;
-					}
-				}
-			)
-		);
-	}
 
 	getUser(): Observable<any> {
 		return this.http
@@ -113,10 +92,15 @@ export class AuthenticationService implements HttpInterceptor {
 						this.authenticated = true;
 						if (data['details']) {
 							this.user = new User(data['details']);
+						} else {
+							console.error('missing user details');
 						}
 						if (this.user.token) {
 							localStorage.setItem(AuthenticationService.JWT_TOKEN, this.user.token);
+						} else {
+							console.error('missing token');
 						}
+						this.loginChange(true);
 					} else {
 						this.authenticated = false;
 						localStorage.removeItem(AuthenticationService.JWT_TOKEN);
@@ -162,26 +146,29 @@ export class AuthenticationService implements HttpInterceptor {
 		localStorage.removeItem(AuthenticationService.JWT_TOKEN);
         this.authenticated = false;
 		this.user = new User();
-		this.router.navigateByUrl('/shop');
-		/*
-		const logoutParams = new HttpParams().set('logout', 'logout');
 		this.messageService.clear();
-		return this.http
-			.post(Constant.endpoint + 'logout', logoutParams, { responseType: 'text' })
-			.pipe(
-				tap(data => {
-					this.authenticated = false;
-					this.user = new User();
-					this.router.navigateByUrl('/shop');
-				}),
-				catchError(
-					this.messageService.handleObservableError<{}>(
-						'Unable to Logout. Try again Later'
-					)
-				)
-			);
-		*/
+		this.logoutChange(true);
+		this.router.navigateByUrl('/shop');
 	}
+
+	/**
+     * retrieves a new jwt token with extended session time
+     * @param credentials
+     */
+	 public retrieveToken() {
+        return this.http
+        .post(Constant.endpoint + 'retrieveToken', null, { responseType: 'text' })
+        .pipe(map((result: string) => {
+            if (result) {
+                localStorage.setItem(AuthenticationService.JWT_TOKEN, result);
+            }
+            return result;
+        },
+            (err) => {
+            console.error(err);
+            })
+        );
+    }
 
 	/**
 	 * will redirect to a page if a user is authenticated or not depending on the parameter

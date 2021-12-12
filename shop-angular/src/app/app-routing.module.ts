@@ -5,7 +5,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { PathResolveService } from './service/path-resolve.service';
-import { AuthenticationService } from './service/authentication.service';
 
 import { HomepageComponent } from './page/homepage/homepage.component';
 import { AdminpageComponent } from './page/adminpage/adminpage.component';
@@ -16,6 +15,7 @@ import { NotFoundComponent } from './page/not-found/not-found.component';
 import { paths } from './object/paths';
 import { RetryInterceptor } from './service/retry.interceptor';
 import { TokenInterceptor } from './service/token.interceptor';
+import { AuthenticationInterceptor } from './service/authInterceptor.service';
 
 const appRoutes: Routes = [
   {
@@ -69,7 +69,7 @@ const appRoutes: Routes = [
   providers: [
     {
         provide: HTTP_INTERCEPTORS,
-        useClass: AuthenticationService,
+        useClass: AuthenticationInterceptor,
         multi: true
     },
     {

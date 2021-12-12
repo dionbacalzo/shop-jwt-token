@@ -1,19 +1,15 @@
 package com.shop.service;
 
 import java.text.MessageFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,7 +18,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -32,7 +27,6 @@ import com.lambdaworks.crypto.SCryptUtil;
 import com.shop.constant.AppConstant;
 import com.shop.dao.TokenDao;
 import com.shop.dao.UserDao;
-import com.shop.domain.TokenDomainObject;
 import com.shop.domain.UserDomainObject;
 import com.shop.domain.adapter.UserDomainObjectAdapter;
 import com.shop.dto.Result;
@@ -43,7 +37,7 @@ import com.shop.util.JwtTokenUtil;
 
 @Service
 @Component("loginManagerImpl")
-public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
+public class LoginManagerImpl extends BaseService implements LoginManager, AuthenticationProvider  {
 
 	protected final Logger logger = LogManager.getLogger(getClass());
 	
@@ -269,5 +263,43 @@ public class LoginManagerImpl implements LoginManager, AuthenticationProvider {
 		
 		return result;
 	}
+    
+    @Override
+    public String getAuthenticationToken() {
+		logger.debug(AppConstant.METHOD_IN);
+		String token = "";
+		try {
+			if (getCurrentUserId() != null && !getCurrentUserId().trim().isEmpty()) {
+				String username = getCurrentUserId();
+				logger.debug("Getting Token of User (" + username + ")");
+				User user = new UserAdapter(userDaoImpl.findByUserName(username));
+				if (user != null && user.getUsername() != null) {
+					// set token
+			        Long expirationTime = Long.valueOf(AppConstant.SESSION_TIMEOUT);
+			        Long countdownTime = Long.valueOf(60); // default to 60 seconds 
+			        if (expirationTime != null) {
+						if (expirationTime  > countdownTime) {
+							countdownTime = expirationTime - countdownTime;
+						}
+					}
+			        Map<String, Object> claims = new HashMap<String, Object>();
+			        claims.put("issuedDate", new Date(System.currentTimeMillis()));
+			        claims.put("expiryDate", new Date(System.currentTimeMillis() + expirationTime  * 1000 ));
+			        claims.put("countdownDate", new Date(System.currentTimeMillis() + countdownTime * 1000 ));
+			        claims.put("role", user.getRole());
+			        token = jwtTokenUtil.doGenerateToken(claims,String.valueOf(user.getUsername()));
+			    	logger.debug("Token = " + token);
+				} else {
+					logger.error("No user is retrieved from username " + username);
+				}
+			} else {
+				logger.error("No userid is retrieved from Authentication Header");
+			}
+		} catch (Exception e){
+			logger.error(e.getMessage(), e);
+		}
+		logger.debug(AppConstant.METHOD_OUT);
+        return token;
+    }
     
 }

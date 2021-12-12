@@ -44,10 +44,10 @@ export class SessionTimeoutService {
                 this.timerSubscription = timer(0, 1000).pipe(
                     takeWhile(t => t < seconds),
                     map(t => seconds - t)
-                ).subscribe(
-                    t => this._countdown.next(t),
-                    null,
-                    () => {
+                ).subscribe({
+                    next: (t) => {this._countdown.next(t)},
+                    error: () =>console.error('timerSubscription error'),
+                    complete:() => {
                         this._countdown.complete();
                         this._isSessionExpired = true;
 
@@ -56,7 +56,7 @@ export class SessionTimeoutService {
                         // countdown can be performed more than once.
                         this._countdown = new Subject<number>();
                     }
-                );
+                });
                 // set timeout for when dialog box appears
                 this.setSessionTimeout(seconds);
             }

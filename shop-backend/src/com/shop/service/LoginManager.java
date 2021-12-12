@@ -12,4 +12,6 @@ public interface LoginManager {
 
 	public Result signup(User user);
 
+	public String getAuthenticationToken();
+
 }

@@ -3,8 +3,8 @@ package com.shop.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -91,6 +92,25 @@ public class AuthenticationController {
 		logger.debug(AppConstant.METHOD_OUT);
 		
 		return json;
+	}
+	
+	/**
+	 * retrieves the token for the currently logged in user
+	 * @param authentication
+	 * @return
+	 */
+	@RequestMapping(value = "retrieveToken")
+    @ResponseBody
+    public String getAuthenticationToken() {
+		logger.debug(AppConstant.METHOD_IN);
+		String token = "";
+		try {
+			token = loginManagerImpl.getAuthenticationToken();
+		} catch (Exception e){
+			logger.error(e.getMessage(), e);
+		}
+		logger.debug(AppConstant.METHOD_OUT);
+        return token;
 	}
 
 	
