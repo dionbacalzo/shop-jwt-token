@@ -1,0 +1,12 @@
+.messageContainer {
+	padding: 5px 10px;
+	color: #fff;
+}
+
+.deleteButton {
+    background: url(/assets/images/remove.png) no-repeat;
+    height: 16px;
+    width: 16px;
+    border: none;
+    float: right;
+}

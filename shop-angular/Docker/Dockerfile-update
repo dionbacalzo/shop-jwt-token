@@ -1,0 +1,23 @@
+FROM angular:2.0
+
+# set work directory
+WORKDIR /usr/src/app
+
+# clean workspace
+RUN rm -fr $(ls -1 --ignore=node_modules .) 
+# add app
+COPY . /usr/src/app
+
+# update dependencies
+RUN npm install
+
+# run tests
+RUN ng test
+
+# start app
+CMD ng serve --host 0.0.0.0
+
+# at the constants.ts file change the endpoint to the host's ip address (127.0.0.1)
+# docker build -f Docker/Dockerfile-platform -t angular:2.0 .
+# docker build -f Docker/Dockerfile-update -t angular-update:2.0 .
+# docker run -d -p 4200:4200 angular-update:2.0

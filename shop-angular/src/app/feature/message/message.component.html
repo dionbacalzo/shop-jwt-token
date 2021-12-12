@@ -1,0 +1,7 @@
+<ng-container *ngIf="messagesValues" >
+    <!--<button class="clear" (click)="messageService.clear()">clear</button>-->    
+    <div class="messageContainer" *ngFor='let messageContent of messageContainerList; index as i' [style.backgroundColor]="messageContent.backgroundColor"  > 
+        {{messageContent.message.messageDisplay}}
+        <button class="deleteButton" (click)="remove(i)"></button> 
+    </div>
+</ng-container>

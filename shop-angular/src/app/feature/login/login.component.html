@@ -1,0 +1,23 @@
+<div class="col-12" *ngIf="!hideLoginForm">
+  <div class="col-2">&nbsp;</div>
+  <div class="col-8">
+	<h4>Login</h4>
+	<form [formGroup]="loginForm" #formDir="ngForm" id="loginForm" role="form" (submit)="login()">
+		<div class="form-group col-12">
+			<label class="col-4" for="username">Username:</label>
+			<input type="text" class="form-control col-8" id="username" name="username" formControlName="username" required />
+		</div>
+		<div class="form-group col-12">
+        	<label class="col-4" for="password">Password:</label>
+        	<input type="password" class="form-control col-8" id="password" name="password" formControlName="password" required />
+		</div>
+		<div class="col-12">
+			<button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid || loginForm.untouched">Submit</button>
+		</div>
+	</form>
+  </div>
+  <div class="col-2">&nbsp;</div>
+</div>
+<div class="col-12 spinner-container" *ngIf="hideLoginForm && !errorLoginForm">
+    <mat-spinner class="center"></mat-spinner>
+</div>

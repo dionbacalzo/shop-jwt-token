@@ -1,0 +1,25 @@
+#uploadForm {
+	margin: 15px 0;
+}
+
+#uploadForm [class*="col-"] {
+	margin: 3px 0;
+}
+
+button {
+    margin: 5px 0;
+}
+
+.ng-valid[required], .ng-valid.required  {
+    border: 1px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form).ng-touched:not(form) {
+    border: 1px solid #a94442; /* red */
+}
+
+.errorMessage {
+    height: 19px;
+    font-size: 0.8em;
+    color: red;
+}

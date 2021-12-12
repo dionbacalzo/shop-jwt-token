@@ -1,0 +1,39 @@
+.gradle
+# Intellij
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# Gradle
+.gradle
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored).
+# Add this 'after' *.jar ignore
+!gradle-wrapper.jar
+*/gradle/*
+*/gradlew
+*/gradlew.bat
+
+# Binaries
+build
+target
+out
+classes
+reports
+bin
+*.class
+
+#Eclipse
+.classpath
+.project
+.settings
+
+lib/
+classes/
+bin/
+MANIFEST.MF

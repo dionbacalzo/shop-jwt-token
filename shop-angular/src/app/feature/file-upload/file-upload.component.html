@@ -1,0 +1,20 @@
+<div class="col-12 form-group">
+    <h4>Upload Item List</h4>    
+    <form [formGroup]="uploadForm" id="uploadForm" (ngSubmit)="uploadFileToActivity()">
+        <div class="col-12">
+            <input type="file" class="form-control" name="file" formControlName="file" 
+                (change)="handleFileInput($event)" required accept=".txt"/>
+        </div>
+        <div class="errorMessage col-12">
+            <div class="col-12" *ngIf="file.errors && file.touched && file.errors['required']">
+                Filename is required
+            </div>
+            <div class="col-12" *ngIf="file.errors && file.touched && file.errors['pattern']">
+                Only text files are allowed
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" [disabled]="uploadForm.invalid || uploadForm.untouched">Upload</button>
+        </div>
+    </form>
+</div>

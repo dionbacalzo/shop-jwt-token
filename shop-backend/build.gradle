@@ -1,0 +1,93 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+project.webAppDirName = 'WebContent'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+	test {
+		java {
+			srcDir 'test'
+			exclude 'resource/'
+		}
+		resources {
+			srcDir 'test/resource'
+		}
+	}	
+	main {
+		java {
+			srcDir 'src'
+			exclude 'resource/'
+		}
+		resources {
+			srcDir 'src/resource'
+		}
+	}
+}
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+dependencies {	
+	compile 'com.fasterxml.jackson.core:jackson-core:2.9.8'	
+	compile 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
+	compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.8'
+	
+	compile 'org.apache.logging.log4j:log4j-core:2.12.0'
+	compile 'org.apache.logging.log4j:log4j-api:2.12.0'
+	compile 'org.springframework.boot:spring-boot-starter-log4j2:2.1.6.RELEASE'
+		
+	compile 'org.springframework:spring-context:5.1.6.RELEASE'
+	compile 'org.springframework:spring-test:5.1.6.RELEASE'
+	compile 'org.springframework:spring-core:5.1.6.RELEASE'
+	compile 'org.springframework:spring-beans:5.1.6.RELEASE'
+	compile 'org.springframework:spring-web:5.1.6.RELEASE'
+	compile 'org.springframework:spring-webmvc:5.1.6.RELEASE'
+	compile 'org.springframework.data:spring-data-commons:2.1.6.RELEASE'
+	compile 'org.springframework.data:spring-data-mongodb:2.1.6.RELEASE'
+    //compile 'org.springframework.hateoas:spring-hateoas:0.24.0.RELEASE'
+	compile 'org.springframework.boot:spring-boot-starter-hateoas:2.1.4.RELEASE'    
+	//compile 'org.apache.tiles:tiles-jsp:3.0.8'
+	//compile 'javax.servlet:jstl:1.2'
+	
+	//jwt
+	compile 'io.jsonwebtoken:jjwt-impl:0.11.2'
+	compile 'io.jsonwebtoken:jjwt-api:0.11.2'
+	compile 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+	
+	//spring security
+	compile 'org.springframework.security:spring-security-web:5.1.5.RELEASE'
+	compile 'org.springframework.security:spring-security-config:5.1.5.RELEASE'
+	compile 'org.springframework.security:spring-security-taglibs:5.1.5.RELEASE'
+	
+	providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
+
+	testCompile 'junit:junit:4.12'
+	testCompile 'org.mockito:mockito-core:2.27.0'
+	testCompile 'org.springframework.boot:spring-boot-test:2.1.4.RELEASE'
+	testCompile 'org.springframework.boot:spring-boot-test-autoconfigure:2.1.4.RELEASE'	
+}
+
+war {
+	archiveName = 'shop.war'
+}
+
+// exclude default logging for log4j2 
+configurations {
+	all {
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+}
+
+//For Eclipse IDE only
+eclipse {
+  wtp {
+    component {
+      //define context path, default to project folder name
+      contextPath = 'shop'
+    }
+  }
+}

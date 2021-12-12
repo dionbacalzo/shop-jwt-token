@@ -1,0 +1,29 @@
+#loginForm {
+	margin: 15px 0;
+}
+
+#loginForm [class*="col-"] {
+	margin: 3px 0;
+}
+
+.ng-valid[required], .ng-valid.required  {
+  border: 1px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form).ng-touched:not(form) {
+  border: 1px solid #a94442; /* red */
+}
+
+.spinner-container {
+   height: 15em;
+   position: relative 
+}
+
+.center {
+	margin: 0;
+    position: absolute;
+    top: 35%;
+    left: 35%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}

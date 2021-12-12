@@ -1,0 +1,83 @@
+<div class="col-12" *ngIf="!hideSignupForm">
+  <div class="col-2">&nbsp;</div>
+  <div class="col-8">
+    <h4>Signup Form</h4>
+    <form [formGroup]="signupForm" #formDir="ngForm" id="signupForm" role="form" (submit)="signup()">
+      <div class="form-group col-12">
+        <label class="col-4" for="username">Username:</label>
+        <input type="text" class="form-control col-8" id="username" name="username" formControlName="username"
+          required />
+      </div>
+      <div class="errorMessage col-12">
+        <div class="col-4">&nbsp;</div>
+        <div class="col-8" *ngIf="username.errors && username.touched && username.errors['required']">
+          Username is required
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <label class="col-4" for="firstname">First Name:</label>
+        <input type="text" class="form-control col-8" id="firstname" name="firstname" formControlName="firstname"
+          required />
+      </div>
+      <div class="errorMessage col-12">
+        <div class="col-4">&nbsp;</div>
+        <div class="col-8" *ngIf="firstname.errors && firstname.touched && firstname.errors['required']">
+          Firstname is required
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <label class="col-4" for="lastname">Last Name:</label>
+        <input type="text" class="form-control col-8" id="lastname" name="lastname" formControlName="lastname"
+          required />
+      </div>
+      <div class="errorMessage col-12">
+        <div class="col-4">&nbsp;</div>
+        <div class="col-8" *ngIf="lastname.errors && lastname.touched && lastname.errors['required']">
+          Lastname is required
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <label class="col-4" for="password">Password:</label>
+        <input type="password" class="form-control col-8" id="password" name="password" formControlName="password"
+          required />
+      </div>
+      <div class="errorMessage col-12">
+        <div class="col-4">&nbsp;</div>
+        <div class="col-8" *ngIf="password.errors && password.touched && password.errors['required']">
+          Password is required
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <label class="col-4" for="retypePassword">Retype the Password:</label>
+        <input type="password" class="form-control col-8" id="retypePassword" name="retypePassword"
+          formControlName="retypePassword" required />
+      </div>
+      <div class="errorMessage col-12">
+        <div class="col-4">&nbsp;</div>
+        <div class="col-8" *ngIf="retypePassword.errors && retypePassword.errors['mustMatch']">
+          Passwords does not match
+        </div>
+        <div class="col-8" *ngIf="retypePassword.errors && retypePassword.touched && retypePassword.errors['required']">
+          Password Match is required
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <label class="col-4" for="role">Role:</label>
+        <select required name="role" formControlName="role">
+          <option value="USER">User</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="signupSubmit"
+          [disabled]="signupForm.invalid || signupForm.untouched">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-2">&nbsp;</div>
+</div>
+
+<div class="col-12 spinner-container" *ngIf="hideSignupForm">
+  <mat-spinner class="center"></mat-spinner>
+</div>

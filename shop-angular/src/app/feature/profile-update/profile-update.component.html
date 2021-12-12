@@ -1,0 +1,61 @@
+<div class="col-12" [hidden]="hideProfileForm">
+  <div class="col-2">&nbsp;</div>
+  <div class="col-8">
+    <h4>Update Details</h4>
+    <form [formGroup]="profileForm" #formDir="ngForm" id="profileForm" role="form" (submit)="update()">
+      <div class="form-group col-12">
+        <label class="col-4" for="picture">Profile picture</label>
+        <div class="col-8">
+          <div class="col-12">
+            <img id="pic-preview" [src]="pictureSrc" alt="your image" />
+          </div>
+          <div class="col-12">
+            <input type='file' class="form-control" id="picture" name="picture" accept="image/*"
+              formControlName="picture" #pictureRef (change)="updatePreview(pictureRef.files)" />
+          </div>
+        </div>
+      </div>
+      <div class="errorMessage col-12">
+        <div class="col-4">&nbsp;</div>
+        <div class="col-8" *ngIf="picture.touched && picture.errors && picture.errors['pattern']">
+          Profile picture should be a valid image file
+        </div>
+        <div class="col-8" *ngIf="picture.touched && picture.errors && picture.errors['maxFileSize']">
+          Profile picture should be less than 5MB
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <label class="col-4" for="firstname">First Name:</label>
+        <input type="text" class="form-control col-8" id="firstname" name="firstname" formControlName="firstname"
+          value="firstname" required />
+      </div>
+      <div class="errorMessage col-12">
+        <div class="col-4">&nbsp;</div>
+        <div class="col-8" *ngIf="firstname.errors && firstname.touched && firstname.errors['required']">
+          Firstname is required
+        </div>
+      </div>
+      <div class="form-group col-12">
+        <label class="col-4" for="lastname">Last Name:</label>
+        <input type="text" class="form-control col-8" id="lastname" name="lastname" formControlName="lastname"
+          required />
+      </div>
+      <div class="errorMessage col-12">
+        <div class="col-4">&nbsp;</div>
+        <div class="col-8" *ngIf="lastname.errors && lastname.touched && lastname.errors['required']">
+          Lastname is required
+        </div>
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="profileSubmit"
+          [disabled]="profileForm.invalid || profileForm.untouched">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-2">&nbsp;</div>
+</div>
+
+<div class="col-12 spinner-container" [hidden]="!hideProfileForm">
+  <mat-spinner class="center"></mat-spinner>
+</div>

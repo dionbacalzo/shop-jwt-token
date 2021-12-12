@@ -1,0 +1,248 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+	margin: 0;
+	background: #d0d8de;
+}
+
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+/* For desktop: */
+.col-1 {
+	width: 8.33%;
+}
+
+.col-2 {
+	width: 16.66%;
+}
+
+.col-3 {
+	width: 25%;
+}
+
+.col-4 {
+	width: 33.33%;
+}
+
+.col-5 {
+	width: 41.66%;
+}
+
+.col-6 {
+	width: 50%;
+}
+
+.col-7 {
+	width: 58.33%;
+}
+
+.col-8 {
+	width: 66.66%;
+}
+
+.col-9 {
+	width: 75%;
+}
+
+.col-10 {
+	width: 83.33%;
+}
+
+.col-11 {
+	width: 91.66%;
+}
+
+.col-12 {
+	width: 100%;
+}
+
+[class*="col-"] {
+	float: left;
+}
+
+[class*="col-"]::after {
+	clear: both;
+}
+
+h1, h2 {
+	margin: 0;
+	color: #fff;
+	font-size: 1.435em;
+	font-weight: 500;
+	text-transform: none;
+}
+
+#header {
+	padding: 15px;
+	height: auto;
+	background-color: #174873;
+}
+
+#content {
+	min-height: 39.5em;
+	height: 100%;
+	background: #fff;
+}
+
+#main-navbar ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #21509C;
+}
+
+#main-navbar li {
+	float: left;
+}
+
+#main-navbar li a {
+	display: block;
+	color: #fff;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#main-navbar li .active {
+	color: black;
+	background: #fff;
+}
+
+/* Change the link color to #555 (gray) on hover */
+#main-navbar li a:hover {
+	background-color: #555;
+}
+
+#main-navbar li .active:hover {
+	background-color: #fff;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	z-index: 1; /* Sit on top */
+	position: fixed;
+  	height: 100%;
+  	width: 100%;
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	position: relative;
+	background-color: #fefefe;
+	margin: auto;
+	padding: 0;
+	border: 1px solid #888;
+	width: 40%;
+	top: 40%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	-webkit-animation-name: animatetop;
+	-webkit-animation-duration: 0.4s;
+	animation-name: animatetop;
+	animation-duration: 0.4s
+}
+
+button {
+  font-family: Arial;
+  background-color: #81b2ff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: hand;
+}
+button:hover {
+  background-color: #2d6bcc;
+}
+button:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: auto;
+}
+
+/* The Close Button */
+.close {
+	color: #fff;
+	float: right;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.modal-header {
+	padding: 7px 16px;
+	background-color: #5cb85c;
+	color: white;
+	font-size: 1.2em;
+}
+
+.modal-body {
+	padding: 2px 16px;
+}
+
+.modal-footer {
+	padding: 2px 16px;
+	background-color: #5cb85c;
+	color: #fff;
+}
+
+.warning {
+	color: red;
+}
+
+.success {
+	color: green;
+}
+
+#footer {
+	margin: 0;
+	padding: 15px;
+	height: auto;
+	background-color: #174873;
+}
+
+/* For mobile phones and tablets: */
+@media only screen and (max-width: 992px) {
+	[class*="col-"] {
+		float: none;
+		width: 100%;
+	}
+	#header {
+		top: 0;
+		position: fixed;
+		text-align: center;
+		z-index: 1;
+	}
+	h1, h2 {
+		font-size: 1.2em;
+		font-weight: 500;
+		text-transform: none;
+	}
+	#main-navbar {
+		margin-top: 2em;
+	}
+	#content {
+		margin-bottom: 2em;
+	}
+	#footer {
+		bottom: 0;
+		position: fixed;
+		text-align: center;
+		z-index: 1;
+	}
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

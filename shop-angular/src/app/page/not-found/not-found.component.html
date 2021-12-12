@@ -1,0 +1,10 @@
+<div class="col-12">
+  <div class="col-2">&nbsp;</div>
+	<div class="col-8">
+    <h4>
+        Page not found
+    </h4>
+    <p *ngIf="path">You might want to go to the <a [routerLink]="path">{{ displayPath() }} page</a></p>
+  </div>
+  <div class="col-2">&nbsp;</div>
+</div>

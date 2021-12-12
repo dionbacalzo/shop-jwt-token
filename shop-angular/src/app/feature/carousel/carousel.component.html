@@ -1,0 +1,15 @@
+<section class="carousel-wrapper" [ngStyle]="calculateSize(width, height)" (window:resize)="onResize($event)">
+	<ul class="carousel-inner" [ngStyle]="calculateSize(width, height)" #carousel>
+		<ng-content></ng-content>
+	</ul>
+	<ol class="carousel-indicators">
+		<ng-container *ngFor="let number of items; let i = index">
+			<li class="{{'slide-'+i}}" (click)="moveToSlide(i)" [ngClass]="{'active': i === currentSlide}"></li>
+		</ng-container>
+	</ol>
+</section>
+
+<!-- <div>
+	<button (click)="next()" class="btn btn-default">Next</button>
+	<button (click)="prev()" class="btn btn-default">Prev</button>
+</div> -->

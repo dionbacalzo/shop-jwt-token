@@ -1,0 +1,31 @@
+<div class="col-12">
+	<div class="col-2">&nbsp;</div>
+	<div class="col-8">
+		<h4>Reset Account Login Chances Form</h4>
+		<form [formGroup]="resetForm" #formDir="ngForm" id="resetForm" class="resetOuterContainer" role="form"
+			(submit)="reset()" *ngIf="!emptyUserList">
+			<div formArrayName="users" [ngClass]="resetInnerContainerClass" #resetInnerContainer>
+				<ng-container *ngFor="let user of users.controls; let i=index">
+					<div [formGroupName]="i" class="form-group col-12">
+						<label for="username">
+							<input type="checkbox" class="form-control" id="username" name="username"
+								(change)="setupUsernameList($event)" value="{{user.value.username}}" />
+							{{user.value.username}} - {{user.value.firstname}} {{user.value.lastname}}
+						</label>
+					</div>
+				</ng-container>
+			</div>
+			<div class="col-12">
+				<button type="submit" class="resetSubmit"
+					[disabled]="resetForm.invalid || !contentEdited">Submit</button>
+			</div>
+		</form>
+		<div class="col-12" *ngIf="emptyUserList">
+			There are no Accounts to Display
+		</div>
+		<div class="col-12 spinner-container" *ngIf="hideResetForm && !emptyUserList && !errorUserList">
+			<mat-spinner class="center"></mat-spinner>
+		</div>
+	</div>
+	<div class="col-2">&nbsp;</div>
+</div>

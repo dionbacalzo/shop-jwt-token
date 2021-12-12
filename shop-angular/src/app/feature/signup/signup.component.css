@@ -1,0 +1,35 @@
+#signupForm {
+	margin: 15px 0;
+}
+
+.ng-valid[required].ng-touched:not(form), .ng-valid.required.ng-touched:not(form)  {
+  border: 1px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form).ng-touched:not(form) {
+  border: 1px solid #a94442; /* red */
+}
+
+.spinner-container {
+   height: 15em;
+   position: relative 
+}
+
+.center {
+	margin: 0;
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.errorMessage {
+	height: 19px;
+	font-size: 0.8em;
+	color: red;
+}
+
+.signupSubmit {
+	margin-top: 20px;
+}

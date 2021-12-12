@@ -1,0 +1,35 @@
+<div class="col-12">
+	<div class="col-6">
+		<app-login *ngIf="!isAuthenticated"></app-login>
+		<div *ngIf="isAuthenticated" [ngClass]="isAuthenticated ? 'welcome-user' : ''">
+			<div>
+				<img id="pic-preview" [src]="user.picture ? 'data:image/png;base64,' + user.picture  :  pictureSrc" alt="your image" />
+			</div>
+			<div>
+				Hello {{user.firstname}} {{user.lastname}}
+			</div>
+			<div>
+				Welcome to your Homepage
+			</div>
+			<br>
+			<div>
+				Your role is {{user.role}}
+			</div>
+		</div>
+	</div>
+	<div class="col-6">
+		<carousel height="325px" [automatic]="5">			
+			<carousel-item *ngFor="let item of carouselSrc; let i = index">
+				<div [ngStyle]="item.image" class="carousel-item">
+					<div [class]="item.textClass">
+						<p class="text">{{item.text}}</p>
+					</div>
+				</div>
+			</carousel-item>
+		</carousel>		
+	</div>
+</div>
+<div class="col-12">
+
+</div>
+<app-shop></app-shop>

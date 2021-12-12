@@ -1,0 +1,4 @@
+Pixel 2,600,phone,google,2018-03-22 00:00:00.000
+Galaxy S9,719,phone,Samsung,2018-05-00 00:00:00.000
+P20 PRO,800,phone,HUAWEI,2018-02-00 00:00:00.000
+Aspire 4750Z,400,laptop,Acer,2010-02-00 00:00:00.000

@@ -1,0 +1,53 @@
+#itemTableContainer {
+	margin-top: 25px;
+	min-height: 510px;
+}
+
+#itemTableTitle {
+	text-align: center;
+	font-size: 1.2em;
+	background-color: #21509C;
+	color: #ffffff;
+	padding: 10px 0px;
+}
+
+#itemTable {
+	text-align: center;
+}
+
+#itemTable th {
+    text-align: left;
+    color: #104A93;
+    background-color: #9BDAF7;
+    padding: 10px 5px;
+}
+
+#itemTable td {
+	height: 35px;
+	padding: 10px;
+	background-color: #ffffff;
+	border: 1px solid #104A93;
+}
+
+.spinner-container {
+   height: 15em;
+   position: relative 
+}
+
+.noItem-container {
+	margin: 50px 0px;
+	padding: 15px;
+	text-align: center;
+	font-size: 1em;
+    border: solid 1px;
+    border-radius: 5px;
+}
+
+.center {
+	margin: 0;
+    position: absolute;
+    top: 35%;
+    left: 45%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}

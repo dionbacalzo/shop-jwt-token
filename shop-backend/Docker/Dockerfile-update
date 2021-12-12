@@ -1,0 +1,35 @@
+FROM platform:2.0
+
+# change or remove proxy to current work setup
+ENV http_proxy http://10.12.251.2:8080
+ENV https_proxy http://10.12.251.2:8080
+
+RUN rm -rf /app ||:	
+ADD . /app
+WORKDIR /app
+
+# RUN echo $(ls -1 /app)
+
+# in case user is running the workspace from windows
+RUN dos2unix gradlew
+# make sure you are using the correct proxy setting at gradle.properties for this to work
+RUN ./gradlew clean build war -x test
+
+# directory cleanup (optional)
+RUN rm -f /usr/local/tomcat/webapps/shop.war ||:
+RUN rm -rf /usr/local/tomcat/webapps/shop ||:
+
+# copy war file to tomcat dir
+RUN cp /app/build/libs/shop.war /usr/local/tomcat/webapps/
+
+EXPOSE 8080
+CMD /usr/local/tomcat/bin/catalina.sh run
+
+# POWERSHELL : stop all running containers docker ps -a -q | ForEach { docker stop $_ }
+# docker build -f Docker/Dockerfile-update -t update:2.0 . //run from base folder /shop
+# docker run -d -p 8080:8080 update:2.0
+# docker exec -it <container id> bash //access container bash
+
+# note to self: wget checks if a specific ip from a proxy if it is moved or is currently working
+# use 'docker system prune' to clean up all failed/dangling container & images
+# to access host mongodb at bin/mongod.cfg, change bindIp to 0.0.0.0 then change the mongo.server value at mongo.properties to host ip
