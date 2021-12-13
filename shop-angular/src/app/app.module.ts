@@ -41,6 +41,9 @@ import { SignuppageComponent } from './page/signuppage/signuppage.component';
 import { UpdatepageComponent } from './page/updatepage/updatepage.component';
 import { ProfilepageComponent } from './page/profilepage/profilepage.component';
 import { NotFoundComponent } from './page/not-found/not-found.component';
+import { environment } from 'src/environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { VersionUpdateService } from './service/version-update.service';
 
 @NgModule({
     declarations: [
@@ -78,7 +81,8 @@ import { NotFoundComponent } from './page/not-found/not-found.component';
         MatPaginatorModule,
         MatTableModule,
         MatSortModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
     ],
     providers: [
         AppRoutingModule,
@@ -86,7 +90,8 @@ import { NotFoundComponent } from './page/not-found/not-found.component';
         MessageService,
         ShopRestService,
         AdminService,
-        UserService
+        UserService,
+        VersionUpdateService
     ],
     bootstrap: [AppComponent]
 })

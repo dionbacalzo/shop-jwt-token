@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './service/authentication.service';
+import { VersionUpdateService } from './service/version-update.service';
 
 @Component({
 	selector: 'app-root',
@@ -8,9 +9,11 @@ import { AuthenticationService } from './service/authentication.service';
 })
 export class AppComponent implements OnInit {
 
-	constructor(private authService: AuthenticationService) { }
+	constructor(private authService: AuthenticationService,
+		private sw: VersionUpdateService) { }
 
 	ngOnInit() {
+		this.sw.checkForUpdates();
 		if (!this.isAuthenticated) {
 			//this.authService.getUser().subscribe();
 		}
